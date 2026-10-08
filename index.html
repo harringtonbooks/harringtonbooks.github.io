@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Adams Time Chart, Annotated: The Stream Vault</title>
+<meta name="robots" content="noindex">
+
+<!-- ===================================================================
+     QUESTO FILE NON SI TOCCA PIU'.
+     La destinazione sta nel file destinazione.txt, una riga sola.
+     Per cambiare dove porta il QR: apri destinazione.txt su GitHub,
+     la matita, scrivi il nuovo indirizzo, Commit changes. Basta.
+     Questa pagina lo rilegge a ogni apertura chiedendo di NON usare
+     la cache, cosi' anche un telefono che era gia' stato qui prende
+     subito il nuovo indirizzo.
+     =================================================================== -->
+
+<style>
+  :root{ --carta:#FBF7EC; --inchiostro:#1F1B16; --sottotono:#5C4D32; --miglia:#7A2E1A; }
+  @media (prefers-color-scheme: dark){
+    :root{ --carta:#FBF7EC; --inchiostro:#1F1B16; --sottotono:#5C4D32; --miglia:#7A2E1A; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+       background:var(--carta); color:var(--inchiostro); padding:24px;
+       font-family:Georgia,"Times New Roman",serif; line-height:1.5}
+  .scatola{max-width:30rem; text-align:center}
+  .occhiello{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+       font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
+       color:var(--miglia); margin:0 0 1rem}
+  h1{font-size:1.6rem; line-height:1.2; margin:0 0 .6rem}
+  p{color:var(--sottotono); margin:0 0 1.4rem}
+  a.bottone{display:inline-block; font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+       font-weight:600; font-size:1rem; text-decoration:none; color:#fff;
+       background:var(--miglia); padding:.8em 1.5em; border-radius:3px}
+  a.bottone[hidden]{display:none}
+</style>
+</head>
+<body>
+  <div class="scatola">
+    <p class="occhiello">The Adams Time Chart, Annotated</p>
+    <h1>Opening the Stream Vault</h1>
+    <p id="stato">One moment.</p>
+    <a class="bottone" id="vai" href="#" hidden>Open the Stream Vault</a>
+  </div>
+<script>
+(function(){
+  // Ripiego: usato solo se destinazione.txt non si riesce a leggere (rete
+  // ballerina, file cancellato per sbaglio). Deve essere la destinazione
+  // vera, mai una di prova: e' dove finisce il lettore quando qualcosa
+  // non va, ed e' il momento in cui sbagliare costa di piu'.
+  var RIPIEGO = "https://claude.ai/artifact/KZaXTHL2ZUoh6CMh5bD62T";
+  var stato = document.getElementById('stato');
+  var vai   = document.getElementById('vai');
+  function porta(url){
+    vai.href = url; vai.hidden = false;
+    stato.textContent = "If nothing happens, tap the button.";
+    location.replace(url);
+  }
+  fetch('destinazione.txt?t=' + Date.now(), {cache: 'no-store'})
+    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+    .then(function(t){
+      t = (t || '').trim().split(/\s+/)[0];
+      if (!/^https?:\/\//i.test(t)) throw 0;
+      porta(t);
+    })
+    .catch(function(){ porta(RIPIEGO); });
+})();
+</script>
+</body>
+</html>
