@@ -3,69 +3,155 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Adams Time Chart, Annotated: The Stream Vault</title>
+<title>The Stream Vault | Adams Time Chart Family Study</title>
 <meta name="robots" content="noindex">
-
-<!-- ===================================================================
-     QUESTO FILE NON SI TOCCA PIU'.
-     La destinazione sta nel file destinazione.txt, una riga sola.
-     Per cambiare dove porta il QR: apri destinazione.txt su GitHub,
-     la matita, scrivi il nuovo indirizzo, Commit changes. Basta.
-     Questa pagina lo rilegge a ogni apertura chiedendo di NON usare
-     la cache, cosi' anche un telefono che era gia' stato qui prende
-     subito il nuovo indirizzo.
-     =================================================================== -->
-
+<meta http-equiv="Cache-Control" content="no-cache">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&family=Arimo:wght@400;700&display=swap">
 <style>
-  :root{ --carta:#FBF7EC; --inchiostro:#1F1B16; --sottotono:#5C4D32; --miglia:#7A2E1A; }
-  @media (prefers-color-scheme: dark){
-    :root{ --carta:#FBF7EC; --inchiostro:#1F1B16; --sottotono:#5C4D32; --miglia:#7A2E1A; }
-  }
-  *{box-sizing:border-box}
-  body{margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-       background:var(--carta); color:var(--inchiostro); padding:24px;
-       font-family:Georgia,"Times New Roman",serif; line-height:1.5}
-  .scatola{max-width:30rem; text-align:center}
-  .occhiello{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-       font-size:.78rem; letter-spacing:.16em; text-transform:uppercase;
-       color:var(--miglia); margin:0 0 1rem}
-  h1{font-size:1.6rem; line-height:1.2; margin:0 0 .6rem}
-  p{color:var(--sottotono); margin:0 0 1.4rem}
-  a.bottone{display:inline-block; font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-       font-weight:600; font-size:1rem; text-decoration:none; color:#fff;
-       background:var(--miglia); padding:.8em 1.5em; border-radius:3px}
-  a.bottone[hidden]{display:none}
+/* Layout: one narrow book-like column on the ivory page of the book; three short screens in sequence (thank you, step 1, step 2). Single light theme on purpose, to match the printed book. */
+:root{
+  --paper:#FBF7EC; --ink:#1F1B16; --inksoft:#3B342C; --muted:#5C4D32;
+  --oxblood:#7A2E1A; --vermilion:#A84024; --gold:#B5933B; --sage:#46512F;
+  --tintgold:#F3E9D6; --tablehead:#EFE3CB; --zebra:#F6F0E2;
+  --serif:"Gentium Book Plus","TeX Gyre Pagella","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:Arimo,"TeX Gyre Heros",Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+html,body{margin:0;background:var(--paper);color:var(--ink)}
+body{font-family:var(--serif);font-size:18px;line-height:1.55;padding-inline:16px;padding-block:28px 48px}
+.wrap{max-width:620px;margin:0 auto}
+.running{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:12px;border-bottom:.5px solid var(--gold);padding-bottom:6px;margin-bottom:34px}
+.kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--vermilion);margin:0 0 6px}
+h1{font-weight:400;font-size:clamp(34px,7vw,46px);line-height:1.08;margin:0 0 10px;text-wrap:balance}
+h2{font-weight:700;font-size:23px;color:var(--oxblood);margin:0 0 8px;text-wrap:balance}
+.rule{display:flex;align-items:center;gap:10px;color:var(--gold);margin:14px 0 24px}
+.rule::before,.rule::after{content:"";height:.5px;background:var(--gold);flex:1}
+.rule span{font-size:15px;line-height:1}
+p{margin:0 0 14px;max-width:62ch}
+.lead{font-size:20px;color:var(--inksoft)}
+.steps{display:flex;gap:8px;margin:0 0 26px;flex-wrap:wrap}
+.pill{cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border:1px solid var(--gold);color:var(--muted);background:transparent}
+.pill:hover{background:var(--tablehead)}
+.pill:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.pill[aria-current="step"]{background:var(--oxblood);border-color:var(--oxblood);color:var(--paper)}
+.box{background:var(--tintgold);border-left:3px solid var(--vermilion);padding:16px 18px;margin:18px 0 22px}
+.box p:last-child{margin-bottom:0}
+.label{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--vermilion);margin:0 0 6px}
+ol.how{margin:0;padding-left:1.3em}
+ol.how li{margin:0 0 6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);font-size:15px;font-weight:700;letter-spacing:.03em;text-decoration:none;border:none;cursor:pointer;padding:14px 22px;background:var(--oxblood);color:var(--paper)}
+.btn:hover{background:var(--vermilion)}
+.btn.ghost{background:transparent;color:var(--oxblood);border:1px solid var(--oxblood);padding:13px 21px}
+.btn.ghost:hover{background:var(--tablehead)}
+.btn:focus-visible,.link:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:20px 0 6px}
+.link{font-family:var(--sans);font-size:14px;color:var(--muted);background:none;border:none;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.note{font-size:15px;color:var(--muted)}
+.bonus{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:18px 0;border-top:.5px solid var(--gold)}
+.bonus:last-of-type{border-bottom:.5px solid var(--gold)}
+.num{font-size:30px;line-height:1;color:var(--gold);grid-row:span 3}
+.bonus h3{font-size:19px;margin:0;font-weight:700}
+.bonus p{margin:0;font-size:16.5px;color:var(--inksoft)}
+.bonus .meta{font-family:var(--sans);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--sage);margin-top:2px}
+.bonus .btn{justify-self:start;margin-top:10px;padding:10px 16px;font-size:14px}
+.bonus>*{min-width:0}
+.foot{margin-top:40px;font-size:13.5px;color:var(--muted);border-top:.5px solid var(--gold);padding-top:10px}
+section[hidden]{display:none!important}
+@media (max-width:480px){body{font-size:17px}.num{font-size:26px}.bonus{grid-template-columns:34px 1fr}}
+@media (prefers-reduced-motion:no-preference){section{animation:in .35s ease-out}@keyframes in{from{opacity:.4}to{opacity:1}}}
 </style>
 </head>
 <body>
-  <div class="scatola">
-    <p class="occhiello">The Adams Time Chart, Annotated</p>
-    <h1>Opening the Stream Vault</h1>
-    <p id="stato">One moment.</p>
-    <a class="bottone" id="vai" href="#" hidden>Open the Stream Vault</a>
-  </div>
+
+<div class="wrap">
+  <div class="running"><span>Adams Time Chart Family Study</span><span>The Stream Vault</span></div>
+
+  <!-- Screen 1: thank you -->
+  <section id="s-thanks" aria-labelledby="h-thanks">
+    <p class="kicker">Free bonus</p>
+    <h1 id="h-thanks">Thank you</h1>
+    <div class="rule" aria-hidden="true"><span>&#10086;</span></div>
+    <p class="lead">Five extras for your family are waiting in the Stream Vault. Two short steps and they are yours.</p>
+    <div class="actions"><button class="btn" id="go1" type="button">Continue to step 1</button></div>
+  </section>
+
+  <!-- Screen 2: step 1, the review -->
+  <section id="s-review" aria-labelledby="h-review" hidden>
+    <div class="steps" aria-label="Progress"><button type="button" class="pill" data-go="review" aria-current="step">Step 1 · Your review</button><button type="button" class="pill" data-go="bonus">Step 2 · Your bonuses</button></div>
+    <h2 id="h-review">Step 1. Help another family find the chart</h2>
+    <p>Most families choose a book like this by looking at the pages other readers show them. A short review with a photo or a video of the book open at your table shows them, better than any description, what the chart looks like in a real home.</p>
+    <div class="box">
+      <p class="label">How to leave it, in about two minutes</p>
+      <ol class="how">
+        <li>Open a spread you love, perhaps the one with your favorite Bible story.</li>
+        <li>Take a photo, or a ten-second video turning a few pages.</li>
+        <li>Tap the button below, choose your stars and add the photo or video.</li>
+        <li>Write a sentence or two: who uses the book in your home, and what surprised you.</li>
+      </ol>
+    </div>
+    <div class="actions">
+      <a class="btn" id="reviewLink" href="https://www.amazon.com/review/create-review?asin=B0HN2QHKBX" target="_blank" rel="noopener">Write my review on Amazon</a>
+      <button class="btn ghost" id="go2" type="button">I'm done, take me to step 2</button>
+    </div>
+    <p class="note">Your review is your own choice, and the bonuses are yours either way. <button class="link" id="skip" type="button">Go to the bonuses</button></p>
+  </section>
+
+  <!-- Screen 3: step 2, the bonuses -->
+  <section id="s-bonus" aria-labelledby="h-bonus" hidden>
+    <div class="steps" aria-label="Progress"><button type="button" class="pill" data-go="review">Step 1 · Your review</button><button type="button" class="pill" data-go="bonus" aria-current="step">Step 2 · Your bonuses</button></div>
+    <h2 id="h-bonus">Step 2. Open the Stream Vault</h2>
+    <p>All five files are in one shared folder. Each button opens the folder; tap the file with the same name to view or download it. Print what helps and leave the rest: everything you need to use the book is already printed in it.</p>
+
+    <div class="bonus"><span class="num" aria-hidden="true">1</span>
+      <h3>The Whole Chart, Zoom Edition</h3>
+      <p>The complete 1881 chart on one long page to scroll from left to right and enlarge on a tablet or computer, with every spread of the book marked above it. Open it in a PDF app for full detail.</p>
+      <span class="meta">PDF · about 120 MB · best on Wi-Fi</span>
+      <a class="btn" href="https://drive.google.com/drive/folders/1FZqzu3jaOQ_YlW2FkXyOJFC7T_6eu-17?usp=sharing" target="_blank" rel="noopener">Open bonus 1</a>
+    </div>
+    <div class="bonus"><span class="num" aria-hidden="true">2</span>
+      <h3>From Adam to Christ, the Poster</h3>
+      <p>The line of promise as Adams drew it, 59 names with the spread where each appears and the chart's key dates. One sheet, or two sheets to join into a larger poster.</p>
+      <span class="meta">PDF · 3 pages · printable</span>
+      <a class="btn" href="https://drive.google.com/drive/folders/1FZqzu3jaOQ_YlW2FkXyOJFC7T_6eu-17?usp=sharing" target="_blank" rel="noopener">Open bonus 2</a>
+    </div>
+    <div class="bonus"><span class="num" aria-hidden="true">3</span>
+      <h3>Table Talk Cards for Every Age</h3>
+      <p>51 cards: pictures to find for little ones, the "Ask your family" questions, bigger questions for teens and adults, and "Who was alive?" puzzles. Print double-sided and cut.</p>
+      <span class="meta">PDF · 16 pages · printable</span>
+      <a class="btn" href="https://drive.google.com/drive/folders/1FZqzu3jaOQ_YlW2FkXyOJFC7T_6eu-17?usp=sharing" target="_blank" rel="noopener">Open bonus 3</a>
+    </div>
+    <div class="bonus"><span class="num" aria-hidden="true">4</span>
+      <h3>Thirty Days Along the Stream of Time</h3>
+      <p>One reading, one spread and one question a day, from Creation to your own family. A single page for the fridge, plus a large-print copy.</p>
+      <span class="meta">PDF · 3 pages · printable</span>
+      <a class="btn" href="https://drive.google.com/drive/folders/1FZqzu3jaOQ_YlW2FkXyOJFC7T_6eu-17?usp=sharing" target="_blank" rel="noopener">Open bonus 4</a>
+    </div>
+    <div class="bonus"><span class="num" aria-hidden="true">5</span>
+      <h3>Family Printables</h3>
+      <p>The picture hunt with an answer key, a timeline to add your own family, a family record sheet and an era passport to stamp as you go.</p>
+      <span class="meta">PDF · 5 pages · printable</span>
+      <a class="btn" href="https://drive.google.com/drive/folders/1FZqzu3jaOQ_YlW2FkXyOJFC7T_6eu-17?usp=sharing" target="_blank" rel="noopener">Open bonus 5</a>
+    </div>
+
+    <div class="actions"><button class="link" id="back" type="button">Back to step 1</button></div>
+  </section>
+
+  <p class="foot">Images from the 1881 printing: David Rumsey Map Collection, David Rumsey Map Center, Stanford Libraries.</p>
+</div>
+
 <script>
 (function(){
-  // Ripiego: usato solo se destinazione.txt non si riesce a leggere (rete
-  // ballerina, file cancellato per sbaglio). Deve essere la destinazione
-  // vera, mai una di prova: e' dove finisce il lettore quando qualcosa
-  // non va, ed e' il momento in cui sbagliare costa di piu'.
-  var RIPIEGO = "https://claude.ai/artifact/KZaXTHL2ZUoh6CMh5bD62T";
-  var stato = document.getElementById('stato');
-  var vai   = document.getElementById('vai');
-  function porta(url){
-    vai.href = url; vai.hidden = false;
-    stato.textContent = "If nothing happens, tap the button.";
-    location.replace(url);
-  }
-  fetch('destinazione.txt?t=' + Date.now(), {cache: 'no-store'})
-    .then(function(r){ if(!r.ok) throw 0; return r.text(); })
-    .then(function(t){
-      t = (t || '').trim().split(/\s+/)[0];
-      if (!/^https?:\/\//i.test(t)) throw 0;
-      porta(t);
-    })
-    .catch(function(){ porta(RIPIEGO); });
+  var S={thanks:document.getElementById('s-thanks'),review:document.getElementById('s-review'),bonus:document.getElementById('s-bonus')};
+  function show(k){for(var n in S){S[n].hidden=(n!==k);} try{window.scrollTo(0,0);}catch(e){} }
+  document.getElementById('go1').addEventListener('click',function(){show('review');});
+  document.getElementById('go2').addEventListener('click',function(){show('bonus');});
+  document.getElementById('skip').addEventListener('click',function(){show('bonus');});
+  document.getElementById('back').addEventListener('click',function(){show('review');});
+  Array.prototype.forEach.call(document.querySelectorAll('[data-go]'),function(b){b.addEventListener('click',function(){show(b.getAttribute('data-go'));});});
+  var h=(location.hash||'').replace('#','');
+  if(h==='bonuses'){show('bonus');} else if(h==='review'){show('review');}
 })();
 </script>
 </body>
