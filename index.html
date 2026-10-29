@@ -57,19 +57,14 @@ ol.how li{margin:0 0 6px}
 .bonus .meta{font-family:var(--sans);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--sage);margin-top:2px}
 .bonus .btn{grid-column:2;justify-self:start;margin-top:10px;padding:10px 16px;font-size:14px}
 .bonus>*{min-width:0}
-.ask{margin:0 0 26px;padding:18px 18px 16px;background:var(--tintgold);border-left:3px solid var(--gold)}
-.ask h3{font-size:19px;margin:0 0 6px;font-weight:700;color:var(--oxblood)}
-.ask p{margin:0 0 12px;font-size:16.5px;color:var(--inksoft)}
+.ask{margin:0 0 26px;padding:16px 18px 14px;background:transparent;border:.5px solid var(--gold)}
+.ask h3{font-size:17px;margin:0 0 6px;font-weight:700;color:var(--oxblood)}
+.ask p{margin:0 0 12px;font-size:15.5px;color:var(--inksoft)}
 .ask .btn{padding:11px 18px;font-size:14px}
 .ask .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.ask .done{font-family:var(--sans);font-size:14px;font-weight:700;color:var(--sage);margin:10px 0 0}
-.bonus{transition:filter .4s,opacity .4s}
-.locked .bonus{filter:grayscale(1);opacity:.42;background:#ECE8DF;pointer-events:none;user-select:none}
-.locked .bonus .btn{cursor:not-allowed}
-.locknote[hidden]{display:none}
-.locknote{display:flex;align-items:center;gap:8px}
-.locknote::before{content:"\1F512";font-size:15px}
-.locknote{font-family:var(--sans);font-size:13px;color:var(--muted);margin:0 0 6px}
+.actions[hidden]{display:none}
+.pill:disabled{cursor:default;opacity:.55}
+.pill:disabled:hover{background:transparent}
 .foot{margin-top:40px;font-size:13.5px;color:var(--muted);border-top:.5px solid var(--gold);padding-top:10px}
 section[hidden]{display:none!important}
 @media (max-width:480px){body{font-size:17px}.num{font-size:26px}.bonus{grid-template-columns:34px 1fr}}
@@ -104,26 +99,25 @@ section[hidden]{display:none!important}
         <li>Write a sentence or two: who uses the book in your home, and what surprised you.</li>
       </ol>
     </div>
+    <p class="note">Once you have left your review, come back to this page: your bonuses will be waiting for you here.</p>
     <div class="actions">
       <a class="btn" id="reviewLink" href="https://www.amazon.com/review/create-review?asin=B0HN2QHKBX" target="_blank" rel="noopener">Write my review on Amazon</a>
-      <button class="btn ghost" id="go2" type="button">I'm done, take me to step 2</button>
     </div>
-    <p class="note">Your review is your own choice. <button class="link" id="skip" type="button">Go to the bonuses</button></p>
+    <div class="actions" id="nextWrap" hidden>
+      <button class="btn" id="go2" type="button">Continue to your bonuses</button>
+    </div>
   </section>
 
   <!-- Screen 3: step 2, the bonuses -->
-  <section id="s-bonus" class="locked" aria-labelledby="h-bonus" hidden>
+  <section id="s-bonus" aria-labelledby="h-bonus" hidden>
     <div class="steps" aria-label="Progress"><button type="button" class="pill" data-go="review">Step 1 · Your review</button><button type="button" class="pill" data-go="bonus" aria-current="step">Step 2 · Your bonuses</button></div>
     <div class="ask">
       <h3>Once you have opened the chart together</h3>
       <p>A short, honest review on Amazon helps another family decide whether this book is right for them. A photo of the book open on your table is the most useful thing you can add. It only takes two minutes.</p>
       <div class="row">
-        <a class="btn" href="https://www.amazon.com/review/create-review?asin=B0HN2QHKBX" target="_blank" rel="noopener">Write my review on Amazon</a>
-        <button class="btn ghost" id="unlock" type="button">I've left my review</button>
+        <a class="btn ghost" href="https://www.amazon.com/review/create-review?asin=B0HN2QHKBX" target="_blank" rel="noopener">Write my review on Amazon</a>
       </div>
-      <p class="done" id="unlocked" hidden>Thank you! Your bonuses are unlocked below.</p>
     </div>
-    <p class="locknote" id="locknote">The bonuses unlock once you post your review on Amazon and tap "I've left my review".</p>
 
     <h2 id="h-bonus">Step 2. Open the Stream Vault</h2>
     <p>All five files are in one shared folder. Each button opens the folder; tap the file with the same name to view or download it. Print what helps and leave the rest: everything you need to use the book is already printed in it.</p>
@@ -171,15 +165,16 @@ section[hidden]{display:none!important}
   function show(k){for(var n in S){S[n].hidden=(n!==k);} try{window.scrollTo(0,0);}catch(e){} }
   document.getElementById('go1').addEventListener('click',function(){show('review');});
   document.getElementById('go2').addEventListener('click',function(){show('bonus');});
-  document.getElementById('skip').addEventListener('click',function(){show('bonus');});
   document.getElementById('back').addEventListener('click',function(){show('review');});
   Array.prototype.forEach.call(document.querySelectorAll('[data-go]'),function(b){b.addEventListener('click',function(){show(b.getAttribute('data-go'));});});
-  var sec=document.getElementById('s-bonus');
-  function unlock(){sec.classList.remove('locked');document.getElementById('unlocked').hidden=false;document.getElementById('locknote').hidden=true;try{localStorage.setItem('sv_unlocked','1');}catch(e){}}
-  try{if(localStorage.getItem('sv_unlocked')==='1'){unlock();}}catch(e){}
-  document.getElementById('unlock').addEventListener('click',unlock);
+  var p2=document.querySelectorAll('.pill[data-go="bonus"]')[0];
+  var reviewed=false;
+  function ready(){reviewed=true;p2.disabled=false;setTimeout(function(){document.getElementById('nextWrap').hidden=false;},1500);try{localStorage.setItem('sv_reviewed','1');}catch(e){}}
+  p2.disabled=true;
+  try{if(localStorage.getItem('sv_reviewed')==='1'||localStorage.getItem('sv_unlocked')==='1'){reviewed=true;p2.disabled=false;document.getElementById('nextWrap').hidden=false;}}catch(e){}
+  document.getElementById('reviewLink').addEventListener('click',ready);
   var h=(location.hash||'').replace('#','');
-  if(h==='bonuses'){show('bonus');} else if(h==='review'){show('review');}
+  if(h==='bonuses'){show(reviewed?'bonus':'review');} else if(h==='review'){show('review');}
 })();
 </script>
 </body>
